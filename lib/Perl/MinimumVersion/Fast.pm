@@ -6,7 +6,7 @@ use warnings;
 use Compiler::Lexer;
 use List::Util qw(max);
 
-our $VERSION = "0.02";
+our $VERSION = "0.03";
 
 my $MIN_VERSION   = version->new('5.008');
 my $VERSION_5_012 = version->new('5.012');
@@ -130,7 +130,9 @@ sub _build_minimum_syntax_version {
 
 sub minimum_version {
     my $self = shift;
-    return max($self->{minimum_explicit_version} || 0, $self->{minimum_syntax_version});
+    return $self->{minimum_explicit_version} > $self->{minimum_syntax_version}
+        ? $self->{minimum_explicit_version}
+        : $self->{minimum_syntax_version};
 }
 
 sub minimum_syntax_version {

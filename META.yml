@@ -27,7 +27,7 @@ no_index:
 provides:
   Perl::MinimumVersion::Fast:
     file: lib/Perl/MinimumVersion/Fast.pm
-    version: 0.02
+    version: 0.03
 requires:
   Compiler::Lexer: 0.05
   perl: 5.008005
@@ -35,6 +35,6 @@ resources:
   bugtracker: https://github.com/tokuhirom/Perl-MinimumVersion-Fast/issues
   homepage: https://github.com/tokuhirom/Perl-MinimumVersion-Fast
   repository: git://github.com/tokuhirom/Perl-MinimumVersion-Fast.git
-version: 0.02
+version: 0.03
 x_contributors:
   - 'Kenichi Ishigaki <ishigaki@cpan.org>'
