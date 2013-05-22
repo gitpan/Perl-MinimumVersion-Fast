@@ -6,7 +6,7 @@ use warnings;
 use Compiler::Lexer;
 use List::Util qw(max);
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 my $MIN_VERSION   = version->new('5.008');
 my $VERSION_5_012 = version->new('5.012');
@@ -41,7 +41,7 @@ sub _build_minimum_explicit_version {
     my @tokens = map { @$$_ } @{$tokens};
 
     my $explicit_version;
-    for my $i (0..@$tokens-1) {
+    for my $i (0..@tokens-1) {
         if ($tokens[$i]->{name} eq 'UseDecl' || $tokens[$i]->{name} eq 'RequireDecl') {
             # use feature => 5.010
             # use mro     => 5.010

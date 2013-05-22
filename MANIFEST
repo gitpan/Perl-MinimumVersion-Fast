@@ -10,6 +10,7 @@ script/perlver-fast
 t/00_compile.t
 t/01_simple.t
 t/02_sample.t
+t/03_empty_string.t
 t/sample/Padre-SVN.pm
 META.yml
 MANIFEST
