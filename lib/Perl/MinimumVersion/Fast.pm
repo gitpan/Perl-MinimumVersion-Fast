@@ -8,7 +8,7 @@ use version ();
 use Compiler::Lexer;
 use List::Util qw(max);
 
-our $VERSION = "0.05";
+our $VERSION = "0.06";
 
 my $MIN_VERSION   = version->new('5.008');
 my $VERSION_5_014 = version->new('5.014');
@@ -78,7 +78,7 @@ sub _build_minimum_syntax_version {
         } elsif ($token->{name} eq 'Package') {
             if (@tokens > $i+2 && $tokens[$i+1]->name eq 'Class') {
                 my $number = $tokens[$i+2];
-                if ($number->{name} eq 'Int' || $number->{name} eq 'Double' || $number->{name} eq 'Key') {
+                if ($number->{name} eq 'Int' || $number->{name} eq 'Double' || $number->{name} eq 'VersionString') {
                     # package NAME VERSION; => 5.012
                     $test->('package NAME VERSION' => $VERSION_5_012);
 
