@@ -5,10 +5,10 @@ use warnings;
 
 use version ();
 
-use Compiler::Lexer;
+use Compiler::Lexer 0.07;
 use List::Util qw(max);
 
-our $VERSION = "0.06";
+our $VERSION = "0.07";
 
 my $MIN_VERSION   = version->new('5.008');
 my $VERSION_5_014 = version->new('5.014');
@@ -127,7 +127,11 @@ sub _build_minimum_syntax_version {
                 $test->('%-/%+' => $VERSION_5_010);
             }
         } elsif ($token->{name} eq 'WhenStmt') {
-            if ($i >= 1 && ($tokens[$i-1]->{name} ne 'SemiColon' && $tokens[$i-1]->{name} ne 'RightBrace')) {
+            if ($i >= 1 && (
+                       $tokens[$i-1]->{name} ne 'SemiColon'
+                    && $tokens[$i-1]->{name} ne 'RightBrace'
+                    && $tokens[$i-1]->{name} ne 'LeftBrace'
+                )) {
                 $test->("postfix when" => $VERSION_5_012);
             } else {
                 $test->("normal when" => $VERSION_5_010);
