@@ -8,7 +8,7 @@ use version ();
 use Compiler::Lexer 0.07;
 use List::Util qw(max);
 
-our $VERSION = "0.09";
+our $VERSION = "0.10";
 
 my $MIN_VERSION   = version->new('5.008');
 my $VERSION_5_018 = version->new('5.018');
@@ -166,7 +166,6 @@ sub _build_minimum_syntax_version {
                 my $func = $token->data;
                 if (@tokens >= $i+1) {
                     my $next_token = $tokens[$i+1];
-                    warn $next_token->name;
                     if ($next_token->name eq 'GlobalVar' || $next_token->name eq 'Var') {
                         # each $hashref
                         # each $arrayref
