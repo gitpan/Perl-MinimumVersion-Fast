@@ -5,10 +5,10 @@ use warnings;
 
 use version ();
 
-use Compiler::Lexer 0.07;
+use Compiler::Lexer 0.13;
 use List::Util qw(max);
 
-our $VERSION = "0.10";
+our $VERSION = "0.11";
 
 my $MIN_VERSION   = version->new('5.008');
 my $VERSION_5_018 = version->new('5.018');
@@ -43,7 +43,7 @@ sub new {
 
 sub _build_minimum_explicit_version {
     my ($self, $tokens) = @_;
-    my @tokens = map { @$$_ } @{$tokens};
+    my @tokens = map { @$_ } @{$tokens};
 
     my $explicit_version;
     for my $i (0..@tokens-1) {
@@ -63,7 +63,7 @@ sub _build_minimum_explicit_version {
 
 sub _build_minimum_syntax_version {
     my ($self, $tokens) = @_;
-    my @tokens = map { @$$_ } @{$tokens};
+    my @tokens = map { @$_ } @{$tokens};
     my $syntax_version = $MIN_VERSION;
 
     my $test = sub {
