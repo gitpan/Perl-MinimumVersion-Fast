@@ -4,8 +4,10 @@
       "tokuhirom <tokuhirom@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v0.5.3",
-   "license" : "perl_5",
+   "generated_by" : "Minilla/v0.12.0",
+   "license" : [
+      "perl_5"
+   ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
@@ -19,7 +21,8 @@
          "share",
          "eg",
          "examples",
-         "author"
+         "author",
+         "builder"
       ]
    },
    "prereqs" : {
@@ -53,7 +56,7 @@
    "provides" : {
       "Perl::MinimumVersion::Fast" : {
          "file" : "lib/Perl/MinimumVersion/Fast.pm",
-         "version" : "0.11"
+         "version" : "0.12"
       }
    },
    "release_status" : "stable",
@@ -67,8 +70,10 @@
          "web" : "https://github.com/tokuhirom/Perl-MinimumVersion-Fast"
       }
    },
-   "version" : "0.11",
+   "version" : "0.12",
    "x_contributors" : [
-      "Kenichi Ishigaki <ishigaki@cpan.org>"
+      "Kenichi Ishigaki <ishigaki@cpan.org>",
+      "Karen Etheridge <ether@cpan.org>",
+      "Ahmad M. Zawawi <ahmad.zawawi@gmail.com>"
    ]
 }

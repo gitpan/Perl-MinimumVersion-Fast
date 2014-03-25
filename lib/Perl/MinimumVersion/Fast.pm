@@ -8,7 +8,7 @@ use version ();
 use Compiler::Lexer 0.13;
 use List::Util qw(max);
 
-our $VERSION = "0.11";
+our $VERSION = "0.12";
 
 my $MIN_VERSION   = version->new('5.008');
 my $VERSION_5_018 = version->new('5.018');
@@ -126,8 +126,11 @@ sub _build_minimum_syntax_version {
                 }
             }
         } elsif ($token->{name} eq 'DefaultOperator') {
-            if ($token->{data} eq '//') {
-                $test->('// operator' => $VERSION_5_010);
+            if ($token->{data} eq '//' && $i >= 1) {
+                my $prev_token = $tokens[$i-1];
+                unless ($prev_token->name eq 'BuiltinFunc' && $prev_token->data =~ m{\A(?:split|grep|map)\z}) {
+                    $test->('// operator' => $VERSION_5_010);
+                }
             }
         } elsif ($token->{name} eq 'PolymorphicCompare') {
             if ($token->{data} eq '~~') {
@@ -232,12 +235,10 @@ Perl::MinimumVersion::Fast - Find a minimum required version of perl for Perl co
 =head1 DESCRIPTION
 
 "Perl::MinimumVersion::Fast" takes Perl source code and calculates the minimum
-version of perl required to be able to run it. Because it is based on PPI,
+version of perl required to be able to run it. Because it is based on goccy's L<Compiler::Lexer>,
 it can do this without having to actually load the code.
 
-Perl::MinimumVersion::Fast is alternative implementation of Perl::MinimumVersion.
-
-It's based on goccy's L<Compiler::Lexer>.
+Perl::MinimumVersion::Fast is an alternative fast & lightweight implementation of Perl::MinimumVersion.
 
 This module supports only Perl 5.8.1+.
 If you want to support B<Perl 5.6>, use L<Perl::MinimumVersion> instead.
@@ -248,17 +249,17 @@ In 2013, you don't need to support Perl 5.6 in most of case.
 
 =over 4
 
-=item my $p = Perl::MinimumVersion::Fast->new($filename);
+=item C<< my $p = Perl::MinimumVersion::Fast->new($filename); >>
 
-=item my $p = Perl::MinimumVersion::Fast->new(\$src);
+=item C<< my $p = Perl::MinimumVersion::Fast->new(\$src); >>
 
 Create new instance. You can create object from C<< $filename >> and C<< \$src >> in string.
 
-=item $p->minimum_version();
+=item C<< $p->minimum_version(); >>
 
 Get a minimum perl version the code required.
 
-=item $p->minimum_explicit_version()
+=item C<< $p->minimum_explicit_version() >>
 
 The C<minimum_explicit_version> method checks through Perl code for the
 use of explicit version dependencies such as.
@@ -271,7 +272,7 @@ one are found, the highest version dependency will be returned.
 
 Returns a L<version> object, C<undef> if no dependencies could be found.
 
-=item $p->minimum_syntax_version()
+=item C<< $p->minimum_syntax_version() >>
 
 The C<minimum_syntax_version> method will explicitly test only the
 Document's syntax to determine it's minimum version, to the extent
