@@ -8,7 +8,7 @@ use version ();
 use Compiler::Lexer 0.13;
 use List::Util qw(max);
 
-our $VERSION = "0.14";
+our $VERSION = "0.15";
 
 my $MIN_VERSION   = version->new('5.008');
 my $VERSION_5_018 = version->new('5.018');
@@ -172,6 +172,21 @@ sub _build_minimum_syntax_version {
                         $test->("$func \$hashref, $func \$arrayref" => $VERSION_5_014);
                     } elsif ($next_token->name eq 'GlobalArrayVar' || $next_token->name eq 'ArrayVar') {
                         $test->("$func \@array" => $VERSION_5_012);
+                    }
+                }
+            }
+            if ($token->data eq 'push' || $token->data eq 'unshift' || $token->data eq 'pop' || $token->data eq 'shift' || $token->data eq 'splice') {
+                my $func = $token->data;
+                if (@tokens >= $i+1) {
+                    my $offset = 1;
+                    my $next_token;
+                    do {
+                      $next_token = $tokens[$i+$offset++];
+                    } while $next_token->name eq 'LeftParenthesis';
+                    if ($next_token->name eq 'GlobalVar' || $next_token->name eq 'Var') {
+                        # shift $arrayref
+                        # shift($arrayref, ...)
+                        $test->("$func \$arrayref" => $VERSION_5_014);
                     }
                 }
             }
